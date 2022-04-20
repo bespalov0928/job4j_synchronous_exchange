@@ -11,14 +11,14 @@ import java.util.Optional;
 
 public interface PassportRepository extends CrudRepository<Passport, Integer> {
 
-    @Query("select p from Passport p where p.series = :series")
+    @Query("select p from passports p where p.series = :series")
     Optional<Passport> findBySeries(@Param("series") String series);
 
-    @Query("select p from Passport p where p.validityDate <= :dateCurrent")
+    @Query("select p from passports p where p.validitydate <= :dateCurrent")
     List<Passport> findAllUnavaliabe(@Param("dateCurrent")Date dateCurrent);
 
-    @Query("select p from Passport p where p.validityDate <= :dateCurrent")
-    List<Passport> findAllFindReplaceable(@Param("dateCurrent")Date dateCurrent);
+    @Query("select p from passports p where p.validitydate >= :dateStart and p.validitydate <= :dateEnd")
+    List<Passport> findAllFindReplaceable(@Param("dateStart")Date dateStart, @Param("dateEnd")Date dateEnd);
 
 
 }

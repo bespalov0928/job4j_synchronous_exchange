@@ -18,20 +18,19 @@ public class PassportController {
 
     //    - /save, сохранить данные паспорта
     @PostMapping("/save")
-    public ResponseEntity<Passport> save(@ModelAttribute Passport passport) {
+    public ResponseEntity<Passport> save(@RequestBody Passport passport) {
         return this.passportService.save(passport);
     }
 
     //    - /update?id=*, обновить данные паспорта
-    @PutMapping("/update?id=*")
-    public ResponseEntity<Void> update(@RequestParam int id, @RequestBody Passport passport) {
-        this.passportService.update(id, passport);
+    @PutMapping("/update")
+    public ResponseEntity<Void> update(@RequestBody Passport passport) {
+        this.passportService.update(passport);
         return ResponseEntity.ok().build();
     }
 
-    //    - /delete?id=*, удалить данные паспорта
-    @DeleteMapping("/delete?id=*")
-    public ResponseEntity<Void> delete(@RequestParam int id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable int id) {
         return this.passportService.delete(id);
     }
 

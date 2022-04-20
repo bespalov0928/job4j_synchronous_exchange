@@ -6,17 +6,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
-@Entity
+@Entity(name = "passports")
 public class Passport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    private String lastName;
+    private String lastname;
     private Date birthday;
     private String series;
     private String number;
-    private Date validityDate;
+    private Date validitydate;
 
     public int getId() {
         return id;
@@ -24,14 +24,6 @@ public class Passport {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Date getValidityDate() {
-        return validityDate;
-    }
-
-    public void setValidityDate(Date validityDate) {
-        this.validityDate = validityDate;
     }
 
     public String getName() {
@@ -42,15 +34,7 @@ public class Passport {
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Date getBirthday() {
+     public Date getBirthday() {
         return birthday;
     }
 
@@ -72,5 +56,21 @@ public class Passport {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public Date getValiditydate() {
+        return validitydate;
+    }
+
+    public void setValiditydate(Date validitydate) {
+        this.validitydate = validitydate;
     }
 }

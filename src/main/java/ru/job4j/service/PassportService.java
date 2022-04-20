@@ -27,15 +27,15 @@ public class PassportService {
     }
 
     //    - /update?id=*, обновить данные паспорта
-    public ResponseEntity<Void> update(int id, Passport passport) {
-        Passport passportFind = this.passportRepository.findById(id).get();
-        passportFind.setName(passport.getName());
-        passportFind.setLastName(passport.getLastName());
-        passportFind.setSeries(passport.getSeries());
-        passportFind.setNumber(passport.getNumber());
-        passportFind.setBirthday(passport.getBirthday());
-        passportFind.setValidityDate(passport.getValidityDate());
-        this.passportRepository.save(passportFind);
+    public ResponseEntity<Void> update(Passport passport) {
+//        Passport passportFind = this.passportRepository.findById(id).get();
+//        passportFind.setName(passport.getName());
+//        passportFind.setLastName(passport.getLastName());
+//        passportFind.setSeries(passport.getSeries());
+//        passportFind.setNumber(passport.getNumber());
+//        passportFind.setBirthday(passport.getBirthday());
+//        passportFind.setValidityDate(passport.getValidityDate());
+        this.passportRepository.save(passport);
         return ResponseEntity.ok().build();
     }
 
@@ -72,8 +72,10 @@ public class PassportService {
         Calendar c = new GregorianCalendar();
         c.setTimeInMillis(System.currentTimeMillis());
         c.add(Calendar.MONTH, 3);
-        Date date = c.getTime();
-        List<Passport> list = this.passportRepository.findAllFindReplaceable(date);
+        Date dateEnd = c.getTime();
+        Date datestart = new Date();
+
+        List<Passport> list = this.passportRepository.findAllFindReplaceable(datestart, dateEnd);
         return list;
     }
 

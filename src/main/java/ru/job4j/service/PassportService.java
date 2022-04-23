@@ -24,7 +24,7 @@ public class PassportService {
     }
 
     /**
-     * /update?id=*, обновить данные паспорта
+     * update?id=*, обновить данные паспорта
      */
     public Void update(Passport passport) {
         this.passportRepository.save(passport);
@@ -32,9 +32,9 @@ public class PassportService {
     }
 
     /**
-     * /delete?id=*, удалить данные паспорта
+     * delete?id=*, удалить данные паспорта
      */
-    public Void delete(int id) {
+     public Void delete(int id) {
         Passport passport = new Passport();
         passport.setId(id);
         this.passportRepository.delete(passport);
@@ -42,25 +42,25 @@ public class PassportService {
     }
 
     /**
-     * /find, загрузить все паспорта
+     * ind, загрузить все паспорта
+     * @return
      */
     public List<Passport> findAll() {
         return (List<Passport>) this.passportRepository.findAll();
     }
 
     /**
-     * /find?seria=*, загрузить паспорта с заданной серией
+     * find?seria=*, загрузить паспорта с заданной серией
+     * @param series
+     * @return
      */
     public List<Passport> findBySeries(String series) {
         return this.passportRepository.findBySeries(series);
-//        return new ResponseEntity<Passport>(
-//                passport.orElse(new Passport()),
-//                passport.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND
-//        );
     }
 
-    /**
-     * /unavaliabe, загрузить паспорта чей срок вышел
+     /**
+     * unavaliabe, загрузить паспорта чей срок вышел
+     * @return
      */
     public List<Passport> findAllUnavaliabe() {
         List<Passport> list = this.passportRepository.findAllUnavaliabe(new Date());
@@ -68,7 +68,8 @@ public class PassportService {
     }
 
     /**
-     * /find-replaceable, загрузить паспорта, которые нужно заменить в ближайшие 3 месяца
+     * find-replaceable, загрузить паспорта, которые нужно заменить в ближайшие 3 месяца
+     * @return
      */
     public List<Passport> findAllFindReplaceable() {
         Calendar c = new GregorianCalendar();

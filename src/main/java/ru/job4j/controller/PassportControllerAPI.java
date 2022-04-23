@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/passport_api")
 public class PassportControllerAPI {
 
-    private static final String apiSave = "http://localhost:8080/passport/save";
+    private static final String API_SAVE = "http://localhost:8080/passport/save";
     private static final String apiUpdate = "http://localhost:8080/passport/update";
     private static final String apiDelete = "http://localhost:8080/passport/delete/%s";
     private static final String apiFind = "http://localhost:8080/passport/find";
@@ -28,7 +28,7 @@ public class PassportControllerAPI {
 
     @PostMapping("/save")
     public Passport save(@RequestBody Passport passport) {
-        Passport rsl = rest.postForObject(apiSave, passport, Passport.class);
+        Passport rsl = rest.postForObject(API_SAVE, passport, Passport.class);
         return rsl;
     }
 

@@ -104,10 +104,10 @@
                 <version>3.6.2</version>
                 <configuration>
                     <changeLogFile>${basedir}/db/master.xml</changeLogFile>
-                    <url>${db.url}</url>
-                    <driver>${db.driver}</driver>
-                    <username>${db.username}</username>
-                    <password>${db.password}</password>
+                    <url>jdbc:postgresql://127.0.0.1:5432/pasport_db</url>
+                    <driver>org.postgresql.Driver</driver>
+                    <username>postgres</username>
+                    <password>password</password>
                     <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
                 </configuration>
                 <executions>

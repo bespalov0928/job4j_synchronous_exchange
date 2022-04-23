@@ -1,12 +1,13 @@
 create table passports
 (
     id       serial primary key not null,
-    name    varchar(2000),
-    lastName varchar(2000),
+    name    text,
+    lastName text,
     birthday date,
-    series varchar(2000),
-    number varchar(2000),
-    validityDate date
+    series text,
+    number text,
+    validityDate date,
+    UNIQUE (series, number)
 );
 
 insert into passports (name, lastName, birthday, series, number, validityDate)

@@ -19,55 +19,57 @@ public class PassportService {
         this.passportRepository = passportRepository;
     }
 
-    public ResponseEntity<Passport> save(Passport passport) {
-        return new ResponseEntity<Passport>(
-                this.passportRepository.save(passport),
-                HttpStatus.CREATED
-        );
+    public Passport save(Passport passport) {
+        return this.passportRepository.save(passport);
     }
 
-    //    - /update?id=*, обновить данные паспорта
-    public ResponseEntity<Void> update(Passport passport) {
-//        Passport passportFind = this.passportRepository.findById(id).get();
-//        passportFind.setName(passport.getName());
-//        passportFind.setLastName(passport.getLastName());
-//        passportFind.setSeries(passport.getSeries());
-//        passportFind.setNumber(passport.getNumber());
-//        passportFind.setBirthday(passport.getBirthday());
-//        passportFind.setValidityDate(passport.getValidityDate());
+    /**
+     * /update?id=*, обновить данные паспорта
+     */
+    public Void update(Passport passport) {
         this.passportRepository.save(passport);
-        return ResponseEntity.ok().build();
+        return null;
     }
 
-    //    - /delete?id=*, удалить данные паспорта
-    public ResponseEntity<Void> delete(int id) {
+    /**
+     * /delete?id=*, удалить данные паспорта
+     */
+    public Void delete(int id) {
         Passport passport = new Passport();
         passport.setId(id);
         this.passportRepository.delete(passport);
-        return ResponseEntity.ok().build();
+        return null;
     }
 
-    //    - /find, загрузить все паспорта
+    /**
+     * /find, загрузить все паспорта
+     */
     public List<Passport> findAll() {
         return (List<Passport>) this.passportRepository.findAll();
     }
 
-    //    - /find?seria=*, загрузить паспорта с заданной серией
-    public ResponseEntity<Passport> findBySeries(String series) {
-        var passport = this.passportRepository.findBySeries(series);
-        return new ResponseEntity<Passport>(
-                passport.orElse(new Passport()),
-                passport.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND
-        );
+    /**
+     * /find?seria=*, загрузить паспорта с заданной серией
+     */
+    public List<Passport> findBySeries(String series) {
+        return this.passportRepository.findBySeries(series);
+//        return new ResponseEntity<Passport>(
+//                passport.orElse(new Passport()),
+//                passport.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND
+//        );
     }
 
-    //    - /unavaliabe, загрузить паспорта чей срок вышел
+    /**
+     * /unavaliabe, загрузить паспорта чей срок вышел
+     */
     public List<Passport> findAllUnavaliabe() {
         List<Passport> list = this.passportRepository.findAllUnavaliabe(new Date());
         return list;
     }
 
-    //    - /find-replaceable, загрузить паспорта, которые нужно заменить в ближайшие 3 месяца
+    /**
+     * /find-replaceable, загрузить паспорта, которые нужно заменить в ближайшие 3 месяца
+     */
     public List<Passport> findAllFindReplaceable() {
         Calendar c = new GregorianCalendar();
         c.setTimeInMillis(System.currentTimeMillis());
@@ -78,5 +80,14 @@ public class PassportService {
         List<Passport> list = this.passportRepository.findAllFindReplaceable(datestart, dateEnd);
         return list;
     }
+
+    public Passport findById(int id){
+        return this.passportRepository.findById(id).orElse(null);
+    }
+
+    public Passport findBySeriesNumber(String series, String number){
+        return this.passportRepository.findBySeriesNumber(series, number).orElse(null);
+    }
+
 
 }

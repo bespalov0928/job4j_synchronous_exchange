@@ -15,58 +15,58 @@ import java.util.List;
 @RequestMapping("/passport_api")
 public class PassportControllerAPI {
 
-    private static final String API_save = "http://localhost:8080/passport/save";
-    private static final String API_update = "http://localhost:8080/passport/update";
-    private static final String API_delete = "http://localhost:8080/passport/delete/%s";
-    private static final String API_find = "http://localhost:8080/passport/find";
-    private static final String API_find_id = "http://localhost:8080/passport/find?seria=%s";
-    private static final String API_unavaliabe = "http://localhost:8080/passport/unavaliabe";
-    private static final String API_findReplaceable = "http://localhost:8080/passport/findReplaceable";
+    private static final String apiSave = "http://localhost:8080/passport/save";
+    private static final String apiUpdate = "http://localhost:8080/passport/update";
+    private static final String apiDelete = "http://localhost:8080/passport/delete/%s";
+    private static final String apiFind = "http://localhost:8080/passport/find";
+    private static final String apiFindId = "http://localhost:8080/passport/find?seria=%s";
+    private static final String apiUnavaliabe = "http://localhost:8080/passport/unavaliabe";
+    private static final String apiFindReplaceable = "http://localhost:8080/passport/findReplaceable";
 
     @Autowired
     private RestTemplate rest;
 
     @PostMapping("/save")
     public Passport save(@RequestBody Passport passport) {
-        Passport rsl = rest.postForObject(API_save, passport, Passport.class);
+        Passport rsl = rest.postForObject(apiSave, passport, Passport.class);
         return rsl;
     }
 
     @PutMapping("/update")
     public Void update(@RequestBody Passport passport) {
-        rest.put(API_update, passport, Passport.class);
+        rest.put(apiUpdate, passport, Passport.class);
         return null;
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
-        rest.delete(String.format(API_delete, id));
+        rest.delete(String.format(apiDelete, id));
         return null;
     }
 
     @GetMapping("/find")
     public List<Passport> findAll() {
-        List<Passport> rsl = rest.exchange(API_find, HttpMethod.GET, null, new ParameterizedTypeReference<List<Passport>>(){}
+        List<Passport> rsl = rest.exchange(apiFind, HttpMethod.GET, null, new ParameterizedTypeReference<List<Passport>>(){}
         ).getBody();
         return rsl;
     }
 
     @GetMapping("/find?seria=*")
     public Passport findBySeries(@RequestParam String series) {
-        Passport rsl = rest.getForObject(String.format(String.format(API_find_id, series), series), Passport.class);
+        Passport rsl = rest.getForObject(String.format(String.format(apiFindId, series), series), Passport.class);
         return rsl;
     }
 
     @GetMapping("/unavaliabe")
     public List<Passport> findAllUnavaliabe() {
-        List<Passport> rsl = rest.exchange(API_unavaliabe, HttpMethod.GET, null, new ParameterizedTypeReference<List<Passport>>(){}
+        List<Passport> rsl = rest.exchange(apiUnavaliabe, HttpMethod.GET, null, new ParameterizedTypeReference<List<Passport>>(){}
         ).getBody();
         return rsl;
     }
 
     @GetMapping("/findReplaceable")
     public List<Passport> findAllFindReplaceable() {
-        List<Passport> rsl = rest.exchange(API_findReplaceable, HttpMethod.GET, null, new ParameterizedTypeReference<List<Passport>>(){}
+        List<Passport> rsl = rest.exchange(apiFindReplaceable, HttpMethod.GET, null, new ParameterizedTypeReference<List<Passport>>(){}
         ).getBody();
         return rsl;
     }

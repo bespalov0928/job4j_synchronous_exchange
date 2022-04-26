@@ -34,24 +34,24 @@ public class PassportService {
      * update?id=*, обновить данные паспорта
      */
     public boolean update(Passport passport) {
-        if (findById(passport.getId()) != null) {
+        int rsl = this.passportRepository.updatePassport(passport.getId(), passport.getNumber());
+        if (rsl > 0){
+            return true;
+        } else {
             return false;
         }
-        this.passportRepository.save(passport);
-        return true;
     }
 
     /**
      * delete?id=*, удалить данные паспорта
      */
     public boolean delete(int id) {
-        if (findById(id) != null) {
+        int rsl = this.passportRepository.deletePasport(id);
+        if (rsl > 0){
+            return true;
+        } else {
             return false;
         }
-        Passport passport = new Passport();
-        passport.setId(id);
-        this.passportRepository.delete(passport);
-        return true;
     }
 
     /**

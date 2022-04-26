@@ -35,11 +35,7 @@ public class PassportService {
      */
     public boolean update(Passport passport) {
         int rsl = this.passportRepository.updatePassport(passport.getId(), passport.getNumber());
-        if (rsl > 0){
-            return true;
-        } else {
-            return false;
-        }
+        return rsl > 0 ? true : false;
     }
 
     /**
@@ -47,11 +43,7 @@ public class PassportService {
      */
     public boolean delete(int id) {
         int rsl = this.passportRepository.deletePasport(id);
-        if (rsl > 0){
-            return true;
-        } else {
-            return false;
-        }
+        return rsl > 0 ? true : false;
     }
 
     /**

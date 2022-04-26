@@ -4,8 +4,8 @@ create table if not exists passports
     name    text,
     lastName text,
     birthday date,
-    series text,
-    number text,
+    series int,
+    number int,
     validityDate date,
     UNIQUE (series, number)
 );

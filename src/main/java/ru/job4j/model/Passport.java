@@ -14,8 +14,8 @@ public class Passport {
     private String name;
     private String lastname;
     private Date birthday;
-    private String series;
-    private String number;
+    private int series;
+    private int number;
     private Date validitydate;
 
     public int getId() {
@@ -42,19 +42,19 @@ public class Passport {
         this.birthday = birthday;
     }
 
-    public String getSeries() {
+    public Integer getSeries() {
         return series;
     }
 
-    public void setSeries(String series) {
+    public void setSeries(Integer series) {
         this.series = series;
     }
 
-    public String getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

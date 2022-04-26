@@ -3,6 +3,7 @@ package ru.job4j.service;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import ru.job4j.PassportException;
 import ru.job4j.model.Passport;
 import ru.job4j.repository.PassportRepository;
 
@@ -20,29 +21,41 @@ public class PassportService {
     }
 
     public Passport save(Passport passport) {
-        return this.passportRepository.save(passport);
+        try {
+            return this.passportRepository.save(passport);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
      * update?id=*, обновить данные паспорта
      */
-    public Void update(Passport passport) {
+    public boolean update(Passport passport) {
+        if (findById(passport.getId()) != null) {
+            return false;
+        }
         this.passportRepository.save(passport);
-        return null;
+        return true;
     }
 
     /**
      * delete?id=*, удалить данные паспорта
      */
-     public Void delete(int id) {
+    public boolean delete(int id) {
+        if (findById(id) != null) {
+            return false;
+        }
         Passport passport = new Passport();
         passport.setId(id);
         this.passportRepository.delete(passport);
-        return null;
+        return true;
     }
 
     /**
      * ind, загрузить все паспорта
+     *
      * @return
      */
     public List<Passport> findAll() {
@@ -51,6 +64,7 @@ public class PassportService {
 
     /**
      * find?seria=*, загрузить паспорта с заданной серией
+     *
      * @param series
      * @return
      */
@@ -58,8 +72,9 @@ public class PassportService {
         return this.passportRepository.findBySeries(series);
     }
 
-     /**
+    /**
      * unavaliabe, загрузить паспорта чей срок вышел
+     *
      * @return
      */
     public List<Passport> findAllUnavaliabe() {
@@ -69,6 +84,7 @@ public class PassportService {
 
     /**
      * find-replaceable, загрузить паспорта, которые нужно заменить в ближайшие 3 месяца
+     *
      * @return
      */
     public List<Passport> findAllFindReplaceable() {
@@ -82,11 +98,11 @@ public class PassportService {
         return list;
     }
 
-    public Passport findById(int id){
+    public Passport findById(int id) {
         return this.passportRepository.findById(id).orElse(null);
     }
 
-    public Passport findBySeriesNumber(String series, String number){
+    public Passport findBySeriesNumber(Integer series, Integer number) {
         return this.passportRepository.findBySeriesNumber(series, number).orElse(null);
     }
 

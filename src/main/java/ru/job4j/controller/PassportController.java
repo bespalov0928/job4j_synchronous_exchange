@@ -30,12 +30,12 @@ public class PassportController {
      */
     @PostMapping("/save")
     public ResponseEntity<Passport> save(@RequestBody Passport passport) throws PassportException {
-        Passport passportfind = this.passportService.findBySeriesNumber(passport.getSeries(), passport.getNumber());
-        if (passportfind != null){
+        Passport passportSave = this.passportService.save(passport);
+        if (passportSave == null) {
             throw new PassportException("Passport with this series and number already exists");
         }
         return new ResponseEntity<Passport>(
-                this.passportService.save(passport),
+                passportSave,
                 HttpStatus.CREATED);
     }
 
@@ -44,11 +44,10 @@ public class PassportController {
      */
     @PutMapping("/update")
     public ResponseEntity<Void> update(@RequestBody Passport passport) {
-        if (this.passportService.findById(passport.getId()) == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            this.passportService.update(passport);
+        if (this.passportService.update(passport)) {
             return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -57,11 +56,10 @@ public class PassportController {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
-        if (this.passportService.findById(id) == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            this.passportService.delete(id);
+        if (this.passportService.delete(id)) {
             return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -98,13 +96,15 @@ public class PassportController {
     }
 
     @ExceptionHandler(value = {PassportException.class})
-    public void exceptionHandler(Exception e, HttpServletRequest request, HttpServletResponse response) throws IOException  {
+    public void exceptionHandler(Exception e, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         response.setContentType("application/json");
-        response.getWriter().write(objectMapper.writeValueAsString(new HashMap<>() { {
-            put("message", e.getMessage());
-            put("type", e.getClass());
-        }}));
+        response.getWriter().write(objectMapper.writeValueAsString(new HashMap<>() {
+            {
+                put("message", e.getMessage());
+                put("type", e.getClass());
+            }
+        }));
     }
 
 

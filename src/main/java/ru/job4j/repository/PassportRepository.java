@@ -21,7 +21,7 @@ public interface PassportRepository extends CrudRepository<Passport, Integer> {
     List<Passport> findAllFindReplaceable(@Param("dateStart")Date dateStart, @Param("dateEnd")Date dateEnd);
 
     @Query("select p from passports p where p.series = :series and p.number = :number")
-    Optional<Passport>  findBySeriesNumber(@Param("series") String series, @Param("number") String number);
+    Optional<Passport>  findBySeriesNumber(@Param("series") Integer series, @Param("number") Integer number);
 
 
 }

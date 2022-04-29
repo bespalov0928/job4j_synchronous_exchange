@@ -25,12 +25,10 @@ public interface PassportRepository extends CrudRepository<Passport, Integer> {
     @Query("select p from passports p where p.series = :series and p.number = :number")
     Optional<Passport> findBySeriesNumber(@Param("series") Integer series, @Param("number") Integer number);
 
-//    @Transactional
     @Modifying
     @Query("delete from passports p where p.id = :id")
     int deletePasport(@Param("id")Integer id);
 
-//    @Transactional
     @Modifying
     @Query("update passports p set p.number = :number where p.id = :id")
     int updatePassport(@Param("id") int id, @Param("number") int number);

@@ -133,7 +133,7 @@
                     <execution>
                         <phase>process-resources</phase>
                         <goals>
-                            <goal>clearCheckSums</goal>
+<!--                            <goal>clearCheckSums</goal>-->
                             <goal>update</goal>
                         </goals>
                     </execution>

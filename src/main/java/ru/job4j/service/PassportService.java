@@ -1,7 +1,11 @@
 package ru.job4j.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.job4j.PassportException;
 import ru.job4j.model.Passport;
@@ -13,8 +17,11 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 @Service
+@EnableScheduling
 public class PassportService {
     private final PassportRepository passportRepository;
+    @Autowired
+    private KafkaTemplate<Integer, String> template;
 
 
     public PassportService(PassportRepository passportRepository) {
@@ -70,8 +77,15 @@ public class PassportService {
      *
      * @return
      */
+    @Scheduled(fixedDelay = 1000)
     public List<Passport> findAllUnavaliabe() {
         List<Passport> list = this.passportRepository.findAllUnavaliabe(new Date());
+        if (list.isEmpty()) {
+            for (Passport passport:list) {
+                template.send("unavaliabe", passport.toString());
+            }
+        }
+
         return list;
     }
 

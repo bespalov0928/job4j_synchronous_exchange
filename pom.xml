@@ -61,10 +61,11 @@
             <version>3.7</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.liquibase</groupId>-->
-<!--            <artifactId>liquibase-core</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>3.6.2</version>
+        </dependency>
 
 <!--        <dependency>-->
 <!--            <groupId>com.h2database</groupId>-->
@@ -117,28 +118,6 @@
                 </executions>
             </plugin>
 
-            <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>3.6.2</version>
-                <configuration>
-                    <changeLogFile>${basedir}/db/master.xml</changeLogFile>
-                    <url>jdbc:postgresql://127.0.0.1:5432/pasport_db</url>
-                    <driver>org.postgresql.Driver</driver>
-                    <username>postgres</username>
-                    <password>password</password>
-                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>process-resources</phase>
-                        <goals>
-<!--                            <goal>clearCheckSums</goal>-->
-                            <goal>update</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 

@@ -6,11 +6,8 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 @Component
-public class KafkaTrackerController {
+public class KafkaMailController {
 
     @Autowired
     private KafkaTemplate<Integer, String> template;

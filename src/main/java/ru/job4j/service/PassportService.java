@@ -80,7 +80,7 @@ public class PassportService {
     @Scheduled(fixedDelay = 1000)
     public List<Passport> findAllUnavaliabe() {
         List<Passport> list = this.passportRepository.findAllUnavaliabe(new Date());
-        if (list.isEmpty()) {
+        if (!list.isEmpty()) {
             for (Passport passport:list) {
                 template.send("unavaliabe", passport.toString());
             }
